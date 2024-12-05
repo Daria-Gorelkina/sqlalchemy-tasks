@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, select
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import joinedload
 from models import Base, Movie
@@ -16,5 +16,7 @@ Base.metadata.create_all(engine)
 
 
 # BEGIN (write your solution here)
-
+def get_movies_with_directors(session):
+    query = select(Movie).options(joinedload(Movie.director)).order_by(Movie.title)
+    return session.execute(query).scalars().all()
 # END

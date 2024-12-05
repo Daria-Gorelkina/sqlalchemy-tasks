@@ -26,5 +26,18 @@ Base.metadata.create_all(engine)
 
 
 # BEGIN (write your solution here)
-
+def add_books(engine):
+    Session = sessionmaker(bind=engine)
+    session = Session()
+    try:
+        book1 = Book(title="To Kill a Mockingbird", author="Harper Lee", published_year=1960)
+        book2 = Book(title="1984", author="George Orwell", published_year=1949)
+        session.add_all([book1, book2])
+        session.commit()
+        print("Книги успешно добавлены.")
+    except Exception as e:
+        session.rollback()
+        print("Ошибка при добавлении книг:", e)
+    finally:
+        session.close()
 # END
